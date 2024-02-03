@@ -2,7 +2,7 @@
 #########      PROJECT    SUBMODULES       ##########
 #####################################################
 include(libs/qtmathjax/qtmathjax.pri)
-include(libs/CppMathLib/sources/cppmathlib.pri)
+include(libs/mathlib/mathlib.pri)
 
 #####################################################
 #########      PROJECT   CONFIGURATION     ##########
@@ -19,9 +19,7 @@ LIBS        += -L/usr/local/lib -lpoppler-qt5
 #########       PROJECT    SOURCES         ##########
 #####################################################
 HEADERS  +=                                         \
-    interface/ibooleanfunction.h \
-    interface/ikelitable.h \
-    sources/codeeditor.h \
+    sources/codeeditor.h                            \
     sources/dialogmanual.h                          \
     sources/dialogbase.h                            \
     sources/dialoglatexprinter.h                    \
@@ -29,14 +27,17 @@ HEADERS  +=                                         \
     sources/dialogresults.h                         \
     sources/environment.h                           \
     sources/generatorwindow.h                       \
-    sources/pdfviewer.h \
-    sources/registerspainter.h \
-    sources/registerwidget.h \
-    sources/taskitem.h \
+    sources/pdfviewer.h                             \
+    sources/registerspainter.h                      \
+    sources/registerwidget.h                        \
+    sources/taskitem.h                              \
     sources/testmode.h                              \
     sources/dialogfontsize.h                        \
     sources/include.h                               \
+    sources/turingmachine.h                         \
                                                     \
+    interface/ibooleanfunction.h                    \
+    interface/ikelitable.h                          \
     interface/ialgebrastructures.h                  \
     interface/ieulerfunction.h                      \
     interface/imatrix.tpp                           \
@@ -47,12 +48,9 @@ HEADERS  +=                                         \
     interface/icomplex.tpp                          \
     interface/iringofmembers.tpp                    \
     interface/iringresidue.h                        \
-    sources/turingmachine.h                         \
 
 SOURCES  +=                                         \
-    interface/ibooleanfunction.cpp \
-    interface/ikelitable.cpp \
-    sources/codeeditor.cpp \
+    sources/codeeditor.cpp                          \
     sources/dialogmanual.cpp                        \
     sources/dialogbase.cpp                          \
     sources/dialoglatexprinter.cpp                  \
@@ -60,13 +58,16 @@ SOURCES  +=                                         \
     sources/dialogresults.cpp                       \
     sources/main.cpp                                \
     sources/generatorwindow.cpp                     \
-    sources/pdfviewer.cpp \
-    sources/registerspainter.cpp \
-    sources/registerwidget.cpp \
-    sources/taskitem.cpp \
+    sources/pdfviewer.cpp                           \
+    sources/registerspainter.cpp                    \
+    sources/registerwidget.cpp                      \
+    sources/taskitem.cpp                            \
     sources/testmode.cpp                            \
     sources/dialogfontsize.cpp                      \
+    sources/turingmachine.cpp                       \
                                                     \
+    interface/ibooleanfunction.cpp                  \
+    interface/ikelitable.cpp                        \
     interface/ialgebrastructures.cpp                \
     interface/ieulerfunction.cpp                    \
     interface/imebiusfunction.cpp                   \
@@ -76,7 +77,6 @@ SOURCES  +=                                         \
     interface/imatrix.cpp                           \
     interface/iringofmembers.cpp                    \
     interface/iringresidue.cpp                      \
-    sources/turingmachine.cpp                       \
 
 FORMS  +=                                           \
     sources/dialogbase.ui                           \

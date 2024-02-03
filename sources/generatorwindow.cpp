@@ -343,11 +343,7 @@ void GeneratorWindow::runTaskManager(const QString &task, bool closeMode)
     else if (task == "Алгебраические Структуры")
         window = new DialogBase(AllTasks::AlgebraStructures, closeMode, this);
     else if (task == "Группы и их свойства")
-//        window = new DialogBase(AllTasks::GroupProperties, closeMode, this);
-    {
-        QMessageBox::warning(this, "Внимание тестировщикам!", "Задания категории 'Группы и их свойства' находятся на этапе разработки.");
-        return;
-    }
+        window = new DialogBase(AllTasks::GroupProperties, closeMode, this);
     else if (task == "Матрицы")
         window = new DialogBase(AllTasks::Matrix, closeMode, this);
     else if (task == "Кольцо Вычетов")
@@ -358,7 +354,7 @@ void GeneratorWindow::runTaskManager(const QString &task, bool closeMode)
         window = new DialogBase(AllTasks::Complex, closeMode, this);
     else if (task == "Булевые Функции")
         window = new DialogBase(AllTasks::BooleanFunction, closeMode, this);
-    else if (task == "Таблица Кэли")
+    else if (task == "Таблица Кэлли")
         window = new DialogBase(AllTasks::KeliTable, closeMode, this);
     else return;
 
@@ -384,7 +380,7 @@ void GeneratorWindow::receivedMetaInfo(int countOfTasks)
 
 void GeneratorWindow::receivedData(std::vector<int> data, AllTasks task, int subTask, int optional)
 {
-    //If tasksCount is null
+    /* If tasksCount is null */
     if (data[0] == 0) return;
 
     TaskInterface *interface;
@@ -411,9 +407,9 @@ void GeneratorWindow::receivedData(std::vector<int> data, AllTasks task, int sub
     case AllTasks::AlgebraStructures:
         interface = new AlgebraStructuresInterface(static_cast<AlgebraStructuresOptions>(subTask));
         break;
-//    case AllTasks::GroupProperties:
+    case AllTasks::GroupProperties:
 //        runGroupProperties(data[0], data[1], data[2], static_cast<GroupPropertiesOptions>(subTask));
-//        break;
+        break;
     case AllTasks::Matrix:
         switch (static_cast<Set>(optional))
         {
@@ -438,7 +434,6 @@ void GeneratorWindow::receivedData(std::vector<int> data, AllTasks task, int sub
         default:
             break;
         }
-
         break;
     case AllTasks::RingResidue:
         interface = new RingResidueInterface(data[1], data[2], static_cast<RingResidueOptions>(subTask), static_cast<ResidueType>(optional));
@@ -492,7 +487,8 @@ void GeneratorWindow::receivedData(std::vector<int> data, AllTasks task, int sub
         return;
     }
 
-    for (int i = 0; i < data[0]; ++i) {
+    for (int i = 0; i < data[0]; ++i)
+    {
         interface->create();
 
         if (!mode) {
@@ -500,14 +496,15 @@ void GeneratorWindow::receivedData(std::vector<int> data, AllTasks task, int sub
             answers.push_back(interface->answer());
         }
         else
-        {
-            tasksForTest.push_back(std::make_tuple(interface->task(), interface->answer(),
-                                                   SupCommands::Number, 0));
-        }
+            tasksForTest.push_back(std::make_tuple(interface->task(), interface->answer(), SupCommands::Number, 0));
     }
-    if (!mode) {
+
+    if (!mode)
+    {
         descriptions.push_back(interface->description());
         this->tasks.push_back(std::move(tasks));
         isReadyRender();
-    } delete interface;
+    }
+
+    delete interface;
 }

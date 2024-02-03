@@ -1,7 +1,7 @@
-# MathTasksRenderer
+# AlgebraMadness
 
 ## About project
-MathTasksRenderer - application with user interface, written on C++/Qt with MathJax render support. This application was created for learning Higher Algebra. 
+AlgebraMadness - desktop application with user interface, written on C++/Qt with MathJax render support. This application was created for learning Higher Algebra. 
 
 In this project released next themes:
 1. Algebra Structures (groups, rings, fields and other structures);
@@ -21,25 +21,23 @@ At this moment, project have only **russian** localization.
 [Actually releases](https://drive.google.com/drive/folders/1ZljdK5I1yh3rMvvRP4rtfFE1fB51Hb61?usp=share_link)
 
 ## Install and build from sources
-All operations were performed on Ubuntu 22.04 and 23.04
+All operations were performed on Ubuntu 22.04 and 23.04 (Also supports new Debian-based distros).
 
-This application using as submodule self-written mathematical module [CppMathLib](https://github.com/TeddyReady/CppMathLib.git);
+1. Firstly, install necessary packages:
 
-Firstly, install necessary packages:
+    	# apt update && sudo apt upgrade -y
+    	# apt install -y qtbase5-dev qtbase5-doc qtbase5-examples libqt5core5a qt5-doc qt5-assistant libqt5xml5 libqt5webview5 libqt5webview5-dev libqt5websockets5-dev libqt5webkit5-dev libqt5webenginewidgets5 libqt5webview5-dev libqt5svg5-dev libqt5script5 libqt5qml5 libqt5pdfwidgets5 libqt5dbus5 libqt53dcore5 libqt53danimation5 libpoppler-qt5-dev libphonon4qt5-dev qttools5-dev qtmultimedia5-dev qtbase5-examples qtbase5-doc-html
+    	# apt install build-essential make cmake git
 
-    # apt update && sudo apt upgrade -y
-    # apt install -y qtbase5-dev qtbase5-doc qtbase5-examples libqt5core5a qt5-doc qt5-assistant libqt5xml5 libqt5webview5 libqt5webview5-dev libqt5websockets5-dev libqt5webkit5-dev libqt5webenginewidgets5 libqt5webview5-dev libqt5svg5-dev libqt5script5 libqt5qml5 libqt5pdfwidgets5 libqt5dbus5 libqt53dcore5 libqt53danimation5 libpoppler-qt5-dev libphonon4qt5-dev qttools5-dev qtmultimedia5-dev qtbase5-examples qtbase5-doc-html
-    # apt install build-essential make cmake git
+2. Next, cloning this repo:
 
-Next, cloning this repo:
+    	$ https://github.com/TeddyReady/AlgebraMadness.git && cd AlgebraMadness
 
-    $ https://github.com/TeddyReady/MathTasksRenderer.git && cd MathTasksRenderer
+3. Let's build:
 
-Let's build:
+    	$ mkdir build && cd build
+    	$ qmake .. && make -j`nproc`
 
-    $ mkdir build && cd build
-    $ qmake .. && make -j`nproc`
+4. Now, we can starting application:
 
-Now, we can starting application:
-
-    $ ./Algebra_Madness
+    	$ ./Algebra_Madness
