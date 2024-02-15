@@ -130,6 +130,12 @@ void GenWidget::loadSettings(AllTasks task, const QString &optionName)
         sbMin->setValue(3);
         sbMax->setValue(5);
         return;
+    case AllTasks::EllCurves:
+        sbMin->setMinimum(1);
+        sbMax->setMaximum(40);
+        sbMin->setValue(1);
+        sbMax->setValue(20);
+        return;
     default:
         return;
     }
@@ -278,6 +284,10 @@ void DialogBase::uploadUI()
         addItem(Gen, "n");
         addItem(Base, "Изоморфизм структур");
         addItem(Base, "Абелевость структуры");
+        break;
+    case AllTasks::EllCurves:
+        addItem(Gen, "n");
+        addItem(Base, "Группа точек");
         break;
     }
 

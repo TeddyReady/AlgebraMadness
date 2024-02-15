@@ -10,6 +10,7 @@
 #include "iringresidue.h"
 #include "icomplex.tpp"
 #include "ikelitable.h"
+#include "iellcurves.h"
 #include "imatrix.tpp"
 #include "environment.h"
 

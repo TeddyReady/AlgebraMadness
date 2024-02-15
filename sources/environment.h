@@ -100,6 +100,7 @@ enum class AllTasks {
     Complex             ,
     BooleanFunction     ,
     KeliTable           ,
+    EllCurves           ,
 };
 
 enum class ExoticOption {

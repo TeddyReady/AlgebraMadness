@@ -13,4 +13,5 @@
     <task name="Символ Якоби"               type="on"></task>
     <task name="Функция Мёбиуса"            type="on"></task>
     <task name="Функция Эйлера"             type="on"></task>
+    <task name="Эллиптические кривые"       type="on"></task>
 </list>
