@@ -16,6 +16,7 @@ SOURCES +=                      \
    $$PWD/ringresidue.cpp        \
    $$PWD/symbollegandre.cpp     \
    $$PWD/transpositiongroup.cpp \
+   $$PWD/ellcurves.cpp          \
 
 HEADERS +=                      \
    $$PWD/basemath.h             \
@@ -32,3 +33,5 @@ HEADERS +=                      \
    $$PWD/ringresidue.h          \
    $$PWD/symbollegandre.h       \
    $$PWD/transpositiongroup.h   \
+   $$PWD/ellcurves.h            \
+

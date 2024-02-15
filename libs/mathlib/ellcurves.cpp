@@ -1,6 +1,4 @@
 #include "ellcurves.h"
-#include <cmath>
-#include <iostream>
 
 EllCurves::EllCurves() : a(0), b(0), p(0), p1(Point()) {}
 
@@ -31,14 +29,14 @@ Point EllCurves::addPoints(const Point& P, const Point& Q, int a, int p) {
 
     if (P.x == Q.x && P.y == Q.y) {
         // двойное сложение
-        int slope = (3 * P.x * P.x + a) //* modInverse1(2 * P.y, p) % p;
+        int slope = (3 * P.x * P.x + a); //* modInverse1(2 * P.y, p) % p;
         int x3 = (slope * slope - 2 * P.x) % p;
         int y3 = (slope * (P.x - x3) - P.y) % p;
         return Point(x3, y3);
     }
 
     // обычное сложение
-    int slope = (Q.y - P.y)// * modInverse1(Q.x - P.x, p) % p;
+    int slope = (Q.y - P.y);// * modInverse1(Q.x - P.x, p) % p;
     int x3 = (slope * slope - P.x - Q.x) % p;
     int y3 = (slope * (P.x - x3) - P.y) % p;
 
@@ -62,8 +60,8 @@ void EllCurves::set(int a, int b, int p, Point p1){
     this->points.push_back(p1);
 }
 
-std::tuple<int,int,int,int,std::vecotr<Point>> EllCurves::get(){
-    std::tuple<int, int, int, std::vector<Point>> tup{a,b,p,points};
-    return tup;
+std::tuple<int,int,int,std::vector<Point>> EllCurves::get()
+{
+    return std::tuple<int, int, int, std::vector<Point>>(a,b,p,points);
 }
 

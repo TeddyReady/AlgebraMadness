@@ -48,6 +48,7 @@ HEADERS  +=                                         \
     interface/icomplex.tpp                          \
     interface/iringofmembers.tpp                    \
     interface/iringresidue.h                        \
+    interface/iellcurves.h                          \
 
 SOURCES  +=                                         \
     sources/codeeditor.cpp                          \
@@ -77,6 +78,7 @@ SOURCES  +=                                         \
     interface/imatrix.cpp                           \
     interface/iringofmembers.cpp                    \
     interface/iringresidue.cpp                      \
+    interface/iellcurves.cpp                        \
 
 FORMS  +=                                           \
     sources/dialogbase.ui                           \

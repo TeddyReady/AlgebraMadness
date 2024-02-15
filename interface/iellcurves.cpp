@@ -15,8 +15,6 @@ void EllCurvesInterface::create()
         Point p1(gen->bounded(minNum, maxNum),gen->bounded(minNum, maxNum));
         curve.set(gen->bounded(minNum, maxNum),gen->bounded(minNum, maxNum),gen->bounded(minNum, maxNum),p1);
         break;
-
-
     }
 }
 
@@ -27,15 +25,21 @@ QString EllCurvesInterface::description()
 
 QString EllCurvesInterface::task()
 {
-    return QString("hello");
+    // Не забывай про ?, вместо него подставляется ответ
+    return QString("hello ?");
 }
 
 QString EllCurvesInterface::answer()
 {
-    std::vector<Point> ans= curve.solve();
-    QString result;
-    for (Point i : ans)
-        std::cout << i.x<<' '<< i.y << '\n';
-        result+= QString::number(i.x) + ',' QString::number(i.y) +'\n';
-    return result;
+    // Крашится программа здесь!
+//    std::vector<Point> ans = curve.solve();
+//    QString result;
+//    for (Point i : ans)
+//    {
+//        std::cout << i.x << ' ' << i.y << '\n';
+//        result += QString::number(i.x) + ',' + QString::number(i.y) +'\n';
+//    }
+//    return result;
+
+    return QString("ToDo");
 }

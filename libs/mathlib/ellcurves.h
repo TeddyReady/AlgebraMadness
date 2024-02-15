@@ -1,8 +1,5 @@
 #ifndef ELLCURVES_H
 #define ELLCURVES_H
-
-#include <vector>
-#include <tuple>
 #include "basemath.h"
 
 class Point {

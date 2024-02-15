@@ -1,4 +1,4 @@
-S#ifndef ELLCURVESINTERFACE_H
+#ifndef ELLCURVESINTERFACE_H
 #define ELLCURVESINTERFACE_H
 #include "interface.h"
 #include "ellcurves.h"
