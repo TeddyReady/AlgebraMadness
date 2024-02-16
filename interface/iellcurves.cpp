@@ -1,7 +1,7 @@
 #include "iellcurves.h"
 
-EllCurvesInterface::EllCurvesInterface(int minNum, int maxNum, EllCurvesOptions option)
-    : minNum(minNum), maxNum(maxNum), option(option), gen(QRandomGenerator::global()) {}
+EllCurvesInterface::EllCurvesInterface(std::pair<int, int> rangeA, std::pair<int, int> rangeB, std::pair<int, int> rangeP, EllCurvesOptions option)
+    : rangeA(rangeA), rangeB(rangeB), rangeP(rangeP), option(option), gen(QRandomGenerator::global()) {}
 EllCurvesInterface::~EllCurvesInterface() { gen = nullptr; }
 
 void EllCurvesInterface::create()
@@ -12,8 +12,7 @@ void EllCurvesInterface::create()
     switch (option)
     {
     case EllCurvesOptions::NextPoint:
-        Point p1(gen->bounded(minNum, maxNum),gen->bounded(minNum, maxNum));
-        curve.set(gen->bounded(minNum, maxNum),gen->bounded(minNum, maxNum),gen->bounded(minNum, maxNum),p1);
+        curve.set(gen->bounded(rangeA.first, rangeA.second), gen->bounded(rangeB.first, rangeB.second), gen->bounded(rangeP.first, rangeP.second));
         break;
     }
 }
@@ -25,21 +24,16 @@ QString EllCurvesInterface::description()
 
 QString EllCurvesInterface::task()
 {
-    // Не забывай про ?, вместо него подставляется ответ
-    return QString("hello ?");
+    return QString("a=" + QString::number(std::get<0>(curve.get())) + ' ' + ", b=" + QString::number(std::get<1>(curve.get())) + ' ' + ", GF(" + QString::number(std::get<2>(curve.get())) + ')' + ' ' + "  ~?");
 }
 
 QString EllCurvesInterface::answer()
 {
-    // Крашится программа здесь!
-//    std::vector<Point> ans = curve.solve();
-//    QString result;
-//    for (Point i : ans)
-//    {
-//        std::cout << i.x << ' ' << i.y << '\n';
-//        result += QString::number(i.x) + ',' + QString::number(i.y) +'\n';
-//    }
-//    return result;
-
-    return QString("ToDo");
+    curve.FindPoints();
+    std::vector<Point> ans = curve.solve();
+    QString result = "";
+    for (Point i : ans)
+        result += QString('(' + QString::number(i.x) + ',' + QString::number(i.y) + ')' + ' ');
+    curve.ClearPoints();
+    return result;
 }

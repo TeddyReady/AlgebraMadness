@@ -10,13 +10,14 @@ enum class EllCurvesOptions {
 
 class EllCurvesInterface : public TaskInterface {
 private:
-    int minNum, maxNum;
+    //int minNum, maxNum;
+    std::pair<int, int> rangeA,rangeB, rangeP;
     EllCurvesOptions option;
     QRandomGenerator *gen;
     EllCurves curve;
 
 public:
-    explicit EllCurvesInterface(int minNum, int maxNum, EllCurvesOptions option);
+    explicit EllCurvesInterface(std::pair<int, int> rangeA,std::pair<int, int> rangeB, std::pair<int, int> rangeP, EllCurvesOptions option);
     ~EllCurvesInterface();
 
     void create();

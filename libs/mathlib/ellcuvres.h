@@ -1,5 +1,6 @@
 #ifndef ELLCURVES_H
 #define ELLCURVES_H
+
 #include "basemath.h"
 
 class Point {
@@ -11,14 +12,6 @@ public:
     Point(int x, int y) : x(x), y(y), isInfinity(false) {}
 };
 
-/*int modInverse1(int a, int m) {
-    for (int x = 1; x < m; x++) {
-        if ((a * x) % m == 1) {
-            return x;
-        }
-    }
-    return -1;
-}*/
 
 class EllCurves {
 private:
@@ -27,12 +20,15 @@ private:
     std::vector<Point> points;
 public:
     explicit EllCurves();
-    explicit EllCurves(int a, int b, int p, Point p1);
+    explicit EllCurves(int a, int b, int p);
 
     Point addPoints(const Point& P, const Point& Q, int a, int p);
+    void FindPoints();
     std::vector<Point> solve();
-    void set(int a, int b, int p, Point p1);
+    void set(int a, int b, int p);
     std::tuple<int,int,int,std::vector<Point>> get();
+    friend int modInverse(int a, int m);
+    void ClearPoints();
 };
 
 #endif //ELLCURVES_H

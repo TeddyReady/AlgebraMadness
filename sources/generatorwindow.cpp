@@ -485,8 +485,8 @@ void GeneratorWindow::receivedData(std::vector<int> data, AllTasks task, int sub
                 static_cast<KeliTableOptions>(subTask));
         break;
     case AllTasks::EllCurves:
-        interface = new EllCurvesInterface(data[1], data[2],
-                static_cast<EllCurvesOptions>(subTask));
+        interface = new EllCurvesInterface(std::make_pair(data[1], data[2]), std::make_pair(data[3], data[4]),std::make_pair(data[5], data[6]),
+                                                static_cast<EllCurvesOptions>(subTask));
         break;
     default:
         qDebug() << "Incorrect AllTasks type! Cannot catch it!";

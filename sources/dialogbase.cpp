@@ -131,10 +131,24 @@ void GenWidget::loadSettings(AllTasks task, const QString &optionName)
         sbMax->setValue(5);
         return;
     case AllTasks::EllCurves:
-        sbMin->setMinimum(1);
-        sbMax->setMaximum(40);
-        sbMin->setValue(1);
-        sbMax->setValue(20);
+        if (optionName == "a"){
+            sbMin->setMinimum(1);
+            sbMax->setMaximum(19);
+            sbMin->setValue(1);
+            sbMax->setValue(19);
+        }
+        else if (optionName == "b"){
+            sbMin->setMinimum(1);
+            sbMax->setMaximum(19);
+            sbMin->setValue(1);
+            sbMax->setValue(19);
+        }
+        else {
+            sbMin->setMinimum(1);
+            sbMax->setMaximum(20);
+            sbMin->setValue(1);
+            sbMax->setValue(20);
+        }
         return;
     default:
         return;
@@ -286,7 +300,9 @@ void DialogBase::uploadUI()
         addItem(Base, "Абелевость структуры");
         break;
     case AllTasks::EllCurves:
-        addItem(Gen, "n");
+        addItem(Gen, "a");
+        addItem(Gen, "b");
+        addItem(Gen, "p");
         addItem(Base, "Группа точек");
         break;
     }
@@ -316,6 +332,7 @@ bool DialogBase::isHaveMoreGens()
     switch (task) {
     case AllTasks::SymbolLegandre:
     case AllTasks::SymbolJacobi:
+    case AllTasks::EllCurves:
         return true;
 
     default:
