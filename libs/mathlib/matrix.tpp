@@ -2,6 +2,9 @@
 #define MATRIX_TPP
 #include "basemath.h"
 
+#define EPS 1E-9
+
+
 template <class T>
 class Matrix {
 private:
@@ -10,13 +13,16 @@ private:
 
 public:
     explicit Matrix(): rows(0), cols(0) {}
+
     explicit Matrix(std::size_t rows, std::size_t cols): rows(rows), cols(cols)
     {
         data.resize(rows);
         for(std::size_t i = 0; i < rows; ++i)
             data[i].resize(cols);
     }
-    explicit Matrix(std::size_t rows, std::size_t cols, T diagonalValue): Matrix<T>(rows, cols)
+
+    explicit Matrix(std::size_t rows, std::size_t cols, T diagonalValue)
+        : Matrix<T>(rows, cols)
     {
         for(std::size_t i = 0; i < rows; ++i)
             for(std::size_t j = 0; j < cols; ++j)
@@ -25,31 +31,67 @@ public:
                 else data[i][j] = static_cast<T>(0);
             }
     }
+
     explicit Matrix(const std::vector<std::vector<T>> &base)
         : Matrix<T>(base.size(), base[0].size())
     {
         for(std::size_t i = 0; i < rows; ++i)
             for(std::size_t j = 0; j < cols; ++j)
+            {
                 data[i][j] = base[i][j];
+            }
     }
-    Matrix(const Matrix<T> &other): Matrix<T>(other.rows, other.cols)
+
+    Matrix(const Matrix<T> &other)
+        : Matrix<T>(other.rows, other.cols)
     {
         for(std::size_t i = 0; i < rows; ++i)
             for(std::size_t j = 0; j < cols; ++j)
-                data[i][j] = other.data[i][j];
+            {
+                data[i][j] = other.data[i][j];                
+            }
     }
 
-    Matrix<T> operator- () const
+    Matrix<T>& operator= (const Matrix<T> &other)
     {
-        Matrix<T> result(*this);
+        if (this == &other)
+            return *this;
 
-        for(std::size_t i = 0; i < result.rows; ++i)
-            for(std::size_t j = 0; j < result.cols; ++j)
-                result.data[i][j] = -result.data[i][j];
+        if (rows != other.rows || cols != other.cols)
+        {
+            data.resize( other.data() )
+        }
 
-        return result;
+        return *this;
     }
 
+    // -- Getters and setters
+    std::vector<T>& operator[] (std::size_t i)
+    {  
+        return data[i];
+    }
+
+    std::vector<std::vector<T>> data() const
+    {
+        return data;
+    }
+
+    T& get(std::size_t i, std::size_t j)
+    {
+        return data[i][j];
+    }
+
+    void set(std::size_t i, std::size_t j, T value)
+    {
+        if (i < rows && j < cols) {
+            data[i][j] = value;
+        }
+        else {
+            std::cerr << "ERROR in matrix.tpp: Cannot set value - incorrect dimension!" << std::endl;
+        }
+    }
+
+    // -- Arethmetic operations
     Matrix<T> operator+ (const Matrix<T> &other) const
     {
         if (rows != other.rows || cols != other.cols)
@@ -72,6 +114,17 @@ public:
         *this = *this + other;
     }
 
+    Matrix<T> operator- () const
+    {
+        Matrix<T> result(*this);
+
+        for(std::size_t i = 0; i < result.rows; ++i)
+            for(std::size_t j = 0; j < result.cols; ++j)
+                result.data[i][j] = -result.data[i][j];
+
+        return result;
+    }
+
     Matrix<T> operator- (const Matrix<T> &other) const
     {
         return *this + (-other);
@@ -81,6 +134,8 @@ public:
     {
         *this = *this - other;
     }
+
+    // -- Умножение матрицы на число слева и спарвва
 
     Matrix<T> operator* (const Matrix<T> &other) const
     {
@@ -108,7 +163,7 @@ public:
     // Return Matrix whithout 1/det
     Matrix<T> operator~ () const
     {
-        if(!isSquare() || det() == static_cast<T>(0))
+        if(!is_square() || det() == static_cast<T>(0))
         {
             std::cerr << "ERROR in matrix.tpp: Matrix does be square and det cannot be equal to zero!" << std::endl;
             return *this;
@@ -120,7 +175,7 @@ public:
             for (std::size_t j = 0; j < cols; ++j)
                 result.data[i][j] = minor(i, j).det() * static_cast<T>(fastPower(-1, i + j));
 
-        return result.trans();
+        return result.transpose();
     }
 
     bool operator== (const Matrix<T> &other) const
@@ -141,29 +196,40 @@ public:
         return !(*this == other);
     }
 
-    bool isSquare() const { return (cols == rows); }
+    bool is_square() const { return (cols == rows); }
 
     T det() const
     {
-        if (!isSquare())
+        if (!is_square())
         {
             std::cerr << "ERROR in matrix.tpp: Cannot calculate det of non sqyare matrix!" << std::endl;
             return static_cast<T>(0);
         }
+
         if (rows == 1)
+        {
             return data[0][0];
+        }
         else if (rows == 2)
+        {
             return data[0][0] * data[1][1] - data[0][1] * data[1][0];
-        else {
+        }
+        else
+        {
             Matrix<T> tmp(rows - 1, rows - 1, static_cast<T>(0));
             T det = static_cast<T>(0);
+
             std::size_t k1, k2;
-            for(size_t i = 0; i < rows; ++i) {
+            for(size_t i = 0; i < rows; ++i) 
+            {
                 k1 = 0;
-                for(size_t j = 1; j < rows; ++j) {
+                for(size_t j = 1; j < rows; ++j)
+                {
                     k2 = 0;
-                    for(size_t k = 0; k < rows; k++) {
-                        if (k != i) {
+                    for(size_t k = 0; k < rows; k++)
+                    {
+                        if (k != i)
+                        {
                             tmp.data[k1][k2] = data[j][k];
                             ++k2;
                         }
@@ -176,21 +242,20 @@ public:
         }
     }
 
-    Matrix<T> trans() const
+    Matrix<T> transpose() const
     {
-        Matrix<T> matrix(cols, rows);
+        Matrix<T> transposed_matrix(cols, rows);
 
         for(std::size_t i = 0; i < cols; ++i)
             for(std::size_t j = 0; j < rows; ++j)
-                matrix.data[i][j] = data[j][i];
+                transposed_matrix.data[i][j] = data[j][i];
 
-        return matrix;
+        return transposed_matrix;
     }
 
     Matrix<T> minor(std::size_t x, std::size_t y) const
     {
-        if (!isSquare()) 
-        {
+        if (!is_square()) {
             std::cerr << "ERROR in matrix.tpp: Cannot find minor of non square matrix!" << std::endl;
             return *this;
         }
@@ -206,26 +271,59 @@ public:
         {
             if (i == x) continue;
             else ++countIndex;
-            for (std::size_t j = 0; j < rows; ++j)
-            {
+            for (std::size_t j = 0; j < rows; ++j) {
                 if (j == y) continue;
                 tmp.data[countIndex].emplace_back(data[i][j]);
             }
         }
         return tmp;
     }
-
-    std::vector<std::vector<T>> get() const
+    
+    T rank() const
     {
-        return data;
+        Matrix<T> matrix(*this);
+        T rank = std::static_cast<T>(0);
+
+        std::vector<bool> selected_rows(matrix.cols, false);
+        for(std::size_t i = 0; i < matrix.cols; ++i)
+        {
+            std::size_t j;
+            for(j = 0; j < matrix.rows; j++) {
+                if(!selected_rows[j] && std::abs( std::static_cast<int>(matrix[j][i]) ) > EPS)
+                    break;
+            }
+
+            if(j != matrix.cols) {
+                ++rank;
+                selected_rows[j] = true;
+                for(std::size_t p = i+ 1; p < matrix.cols; ++p)  {
+                    matrix[j][p] /= matrix[j][i];
+                }
+                for(std::size_t k = 0; k < matrix.rows; ++k) {
+                    if(k != j && std::abs( std::static_cast<int>(matrix[j][i]) ) > EPS){
+                        for(std::size_t p = i + 1; p < matrix.cols; ++p) {
+                            matrix[k][p] -= matrix[j][p] * matrix[k][i];
+                        }
+                    }
+                }
+            }
+        }
+        return rank;
     }
 
-    void set(std::size_t i, std::size_t j, T value)
+    T trace() const
     {
-        if (i < rows && j < cols)
-            data[i][j] = value;
-        else
-            std::cerr << "ERROR in matrix.tpp: Cannot set value - incorrect dimension!" << std::endl;
+        if(!is_square())
+        {
+            std::cerr << "Matrix trace defined only for square matrices" << std::endl;
+            return 0;
+        }
+        T trace = std::static_cast<T>(0);
+
+        for(std::size_t i = 0; i < rows) {
+            trace += this->get(i, i);
+        }
+        return trace;
     }
 };
 
